@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShogunCraft | Professionele Websites</title>
+    <style>
+        /* ShogunCraft Kleurenpalet & Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            line-height: 1.6;
+            padding-bottom: 60px;
+        }
+
+        /* Header / Navbar */
+        header {
+            background-color: #111111;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 4px solid #e63946; /* Samurai Rood */
+        }
+
+        .logo-container img {
+            max-width: 150px;
+            height: auto;
+            border-radius: 50%;
+            border: 3px solid #ffb703; /* Goud accent uit je logo */
+            background-color: #2b2b2b;
+            padding: 5px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-top: 10px;
+            color: #ffffff;
+            letter-spacing: 2px;
+        }
+
+        .tagline {
+            color: #ffb703;
+            font-style: italic;
+            font-size: 1.1rem;
+        }
+
+        /* Hero Sectie */
+        .hero {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #222222;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border-left: 5px solid #e63946;
+        }
+
+        .hero h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        /* Tarieven Kaarten */
+        .pricing-container {
+            display: block;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .price-card {
+            background: #2b2b2b;
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .price-card.featured {
+            border-color: #e63946;
+            position: relative;
+        }
+
+        .badge {
+            background: #e63946;
+            color: white;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            color: #ffb703;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: #aaa;
+        }
+
+        ul {
+            list-style: none;
+            margin: 20px 0;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+            color: #ccc;
+        }
+
+        li::before {
+            content: "⚔️ ";
+            color: #e63946;
+        }
+
+        /* Contact Knop */
+        .cta-btn {
+            display: inline-block;
+            background-color: #e63946;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 25px;
+            margin-top: 15px;
+            transition: background 0.2s;
+        }
+
+        .cta-btn:hover {
+            background-color: #b81d24;
+        }
+
+        /* Over Mij Sectie */
+        .about {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: center;
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 5px;
+            color: #666;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="ShogunCraft Logo">
+        </div>
+        <h1>SHOGUNCRAFT</h1>
+        <p class="tagline">Websites met de precisie van een Samurai</p>
+    </header>
+
+    <div class="hero">
+        <h2>Een professionele website hoeft geen fortuin te kosten.</h2>
+        <p>Ik bouw moderne, razendsnelle websites die perfect werken op elke mobiele telefoon. Speciaal voor lokale ondernemers die online willen groeien.</p>
+    </div>
+
+    <div class="pricing-container">
+        <div class="price-card">
+            <span class="badge">Eenmalig</span>
+            <h3>Website Ontwerp & Bouw</h3>
+            <div class="price">€200</div>
+            <ul>
+                <li>Modern & uniek design</li>
+                <li>Volledig mobielvriendelijk (responsive)</li>
+                <li>Inclusief contactformulier</li>
+                <li>Klaar binnen 1 tot 2 weken</li>
+            </ul>
+        </div>
+
+        <div class="price-card featured">
+            <span class="badge">Populair</span>
+            <h3>Shogun Onderhoud & Hosting</h3>
+            <div class="price">€40<span>/maand</span></div>
+            <ul>
+                <li>Razendsnelle en veilige hosting</li>
+                <li>Maandelijkse back-ups & updates</li>
+                <li>Kleine tekst- of fotowijzigingen inclusief</li>
+                <li>24/7 support bij problemen</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="about">
+        <p><strong>ShogunCraft</strong> is opgericht door een jonge, ambitieuze tech-ondernemer van 13 jaar. <br>Gemotiveerd door de lessen van Mark Tilbury: maximale waarde leveren voor een scherpe prijs.</p>
+        <a href="mailto:jouwemail@gmail.com" class="cta-btn">Start Jouw Project</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 ShogunCraft. Alle rechten voorbehouden.</p>
+    </footer>
+
+</body>
+</html>

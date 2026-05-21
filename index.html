@@ -26,14 +26,14 @@
             background-color: #111111;
             padding: 20px;
             text-align: center;
-            border-bottom: 4px solid #e63946; /* Samurai Rood */
+            border-bottom: 4px solid #e63946;
         }
 
         .logo-container img {
             max-width: 150px;
             height: auto;
             border-radius: 50%;
-            border: 3px solid #ffb703; /* Goud accent uit je logo */
+            border: 3px solid #ffb703;
             background-color: #2b2b2b;
             padding: 5px;
         }
@@ -116,6 +116,26 @@
             color: #aaa;
         }
 
+        .original-price {
+            font-size: 1.2rem;
+            color: #888;
+            text-decoration: line-through;
+            margin-bottom: -8px;
+            display: none;
+        }
+
+        .discount-badge {
+            display: none;
+            background: #ffb703;
+            color: #111;
+            padding: 3px 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-radius: 20px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
         ul {
             list-style: none;
             margin: 20px 0;
@@ -166,6 +186,88 @@
             color: #666;
             font-size: 0.8rem;
         }
+
+        /* ── Promo Code Sectie ── */
+        .promo-section {
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .promo-wrapper {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #222;
+            border: 2px solid #333;
+            border-radius: 30px;
+            padding: 8px 8px 8px 20px;
+            transition: border-color 0.3s;
+        }
+
+        .promo-wrapper:focus-within {
+            border-color: #ffb703;
+        }
+
+        .promo-wrapper input {
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            font-size: 0.95rem;
+            width: 180px;
+            letter-spacing: 1px;
+        }
+
+        .promo-wrapper input::placeholder {
+            color: #666;
+        }
+
+        .promo-wrapper button {
+            background: #e63946;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 18px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+
+        .promo-wrapper button:hover {
+            background: #b81d24;
+        }
+
+        .promo-message {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            min-height: 20px;
+            transition: color 0.3s;
+        }
+
+        .promo-message.success {
+            color: #4caf50;
+        }
+
+        .promo-message.error {
+            color: #e63946;
+        }
+
+        /* Active discount state on cards */
+        .discounted .price {
+            color: #4caf50;
+        }
+
+        .discounted .original-price {
+            display: block;
+        }
+
+        .discounted .discount-badge {
+            display: inline;
+        }
     </style>
 </head>
 <body>
@@ -184,27 +286,43 @@
     </div>
 
     <div class="pricing-container">
-        <div class="price-card">
+        <div class="price-card" id="card-design">
             <span class="badge">Eenmalig</span>
             <h3>Website Ontwerp & Bouw</h3>
-            <div class="price">€200</div>
-            <ul>
-                <li>Modern & uniek design</li>
-                <li>Volledig mobielvriendelijk (responsive)</li>
-                <li>Inclusief contactformulier</li>
-                <li>Klaar binnen 1 tot 2 weken</li>
-            </ul>
+            <div class="original-price" id="orig-design">€200</div>
+            <div class="price" id="price-design">€200 <span class="discount-badge">-50%</span></div>
         </div>
 
-        <div class="price-card featured">
+        <div class="price-card featured" id="card-hosting">
             <span class="badge">Populair</span>
             <h3>Shogun Onderhoud & Hosting</h3>
-            <div class="price">€40<span>/maand</span></div>
+            <div class="original-price" id="orig-hosting">€40/maand</div>
+            <div class="price" id="price-hosting">€40<span>/maand</span> <span class="discount-badge">-50%</span></div>
             <ul>
                 <li>Razendsnelle en veilige hosting</li>
                 <li>Maandelijkse Checks</li>
                 <li>Kleine tekst- of fotowijzigingen inclusief</li>
                 <li>12/7 support bij problemen</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Promo code -->
+    <div class="promo-section">
+        <div class="promo-wrapper">
+            <input type="text" id="promo-input" placeholder="Voer promocode in..." autocomplete="off" />
+            <button onclick="applyPromo()">Toepassen</button>
+        </div>
+        <div class="promo-message" id="promo-message"></div>
+    </div>
+
+    <div class="pricing-container">
+        <div class="price-card" id="card-design-features">
+            <ul>
+                <li>Modern & uniek design</li>
+                <li>Volledig mobielvriendelijk (responsive)</li>
+                <li>Inclusief contactformulier</li>
+                <li>Klaar binnen 1 tot 2 weken</li>
             </ul>
         </div>
     </div>
@@ -217,6 +335,52 @@
     <footer>
         <p>&copy; 2026 ShogunCraft. Alle rechten voorbehouden.</p>
     </footer>
+
+    <script>
+        const PROMO_CODE = "littendekitten";
+        let discountActive = false;
+
+        function applyPromo() {
+            const input = document.getElementById("promo-input").value.trim().toLowerCase();
+            const message = document.getElementById("promo-message");
+
+            if (discountActive) {
+                message.textContent = "✅ Korting is al actief!";
+                message.className = "promo-message success";
+                return;
+            }
+
+            if (input === PROMO_CODE) {
+                discountActive = true;
+
+                // Update design card
+                const priceDesign = document.getElementById("price-design");
+                priceDesign.innerHTML = '€100 <span class="discount-badge">-50%</span>';
+                document.getElementById("card-design").classList.add("discounted");
+
+                // Update hosting card
+                const priceHosting = document.getElementById("price-hosting");
+                priceHosting.innerHTML = '€20<span>/maand</span> <span class="discount-badge">-50%</span>';
+                document.getElementById("card-hosting").classList.add("discounted");
+
+                message.textContent = "🎉 Promocode toegepast! Je krijgt 50% korting op alles.";
+                message.className = "promo-message success";
+
+                document.getElementById("promo-input").disabled = true;
+            } else if (input === "") {
+                message.textContent = "⚠️ Voer een promocode in.";
+                message.className = "promo-message error";
+            } else {
+                message.textContent = "❌ Ongeldige promocode. Probeer het opnieuw.";
+                message.className = "promo-message error";
+            }
+        }
+
+        // Allow pressing Enter to apply
+        document.getElementById("promo-input").addEventListener("keydown", function(e) {
+            if (e.key === "Enter") applyPromo();
+        });
+    </script>
 
 </body>
 </html>

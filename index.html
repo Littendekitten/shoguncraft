@@ -256,6 +256,36 @@
             color: #e63946;
         }
 
+        /* Hidden unlock card */
+        #card-allinclusive {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            border-color: #ffb703;
+        }
+
+        #card-allinclusive.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #card-allinclusive .badge {
+            background: #ffb703;
+            color: #111;
+        }
+
+        #card-allinclusive .price {
+            color: #ffb703;
+        }
+
+        .price-sub {
+            font-size: 1rem;
+            color: #aaa;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+
         /* Active discount state on cards */
         .discounted .price {
             color: #4caf50;
@@ -305,9 +335,26 @@
                 <li>12/7 support bij problemen</li>
             </ul>
         </div>
+        <!-- Hidden All-Inclusive card, unlocked by promo code -->
+        <div class="price-card" id="card-allinclusive">
+            <span class="badge">🏯 Exclusief</span>
+            <h3>Shogun All Inclusive Pakket</h3>
+            <div class="price">€280</div>
+            <p class="price-sub">eenmalig + €20<span style="font-size:0.85rem;color:#aaa">/maand</span></p>
+            <ul>
+                <li>Modern & uniek design</li>
+                <li>Volledig mobielvriendelijk (responsive)</li>
+                <li>Inclusief contactformulier</li>
+                <li>Razendsnelle en veilige hosting</li>
+                <li>Maandelijkse checks & updates</li>
+                <li>Kleine tekst- of fotowijzigingen inclusief</li>
+                <li>12/7 support bij problemen</li>
+                <li>Alles-in-één: bouw én beheer</li>
+            </ul>
+            <a href="mailto:littendekitten@gmail.com" class="cta-btn">Claim Dit Pakket</a>
+        </div>
     </div>
 
-    <!-- Promo code -->
     <div class="promo-section">
         <div class="promo-wrapper">
             <input type="text" id="promo-input" placeholder="Voer promocode in..." autocomplete="off" />
@@ -337,20 +384,27 @@
     </footer>
 
     <script>
-        const PROMO_CODE = "littendekitten";
+        const PROMO_CODE_DISCOUNT = "littendekitten";
+        const PROMO_CODE_UNLOCK = "ultrapacksonboatsarepopulartodayandmaybenottomorrow";
         let discountActive = false;
+        let unlockActive = false;
 
         function applyPromo() {
             const input = document.getElementById("promo-input").value.trim().toLowerCase();
             const message = document.getElementById("promo-message");
 
-            if (discountActive) {
-                message.textContent = "✅ Korting is al actief!";
-                message.className = "promo-message success";
+            if (input === "") {
+                message.textContent = "⚠️ Voer een promocode in.";
+                message.className = "promo-message error";
                 return;
             }
 
-            if (input === PROMO_CODE) {
+            if (input === PROMO_CODE_DISCOUNT) {
+                if (discountActive) {
+                    message.textContent = "✅ Korting is al actief!";
+                    message.className = "promo-message success";
+                    return;
+                }
                 discountActive = true;
 
                 // Update design card
@@ -365,11 +419,25 @@
 
                 message.textContent = "🎉 Promocode toegepast! Je krijgt 50% korting op alles.";
                 message.className = "promo-message success";
-
                 document.getElementById("promo-input").disabled = true;
-            } else if (input === "") {
-                message.textContent = "⚠️ Voer een promocode in.";
-                message.className = "promo-message error";
+
+            } else if (input === PROMO_CODE_UNLOCK) {
+                if (unlockActive) {
+                    message.textContent = "✅ Pakket is al ontgrendeld!";
+                    message.className = "promo-message success";
+                    return;
+                }
+                unlockActive = true;
+
+                const card = document.getElementById("card-allinclusive");
+                card.style.display = "block";
+                // Animate in
+                setTimeout(() => card.classList.add("visible"), 20);
+
+                message.textContent = "🏯 Exclusief pakket ontgrendeld!";
+                message.className = "promo-message success";
+                document.getElementById("promo-input").disabled = true;
+
             } else {
                 message.textContent = "❌ Ongeldige promocode. Probeer het opnieuw.";
                 message.className = "promo-message error";
